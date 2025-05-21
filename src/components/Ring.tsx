@@ -4,7 +4,7 @@ import { Vector3, Euler, TextureLoader, type Group } from "three";
 import { degToRad } from "three/src/math/MathUtils.js";
 
 const Ring = () => {
-  const rockCount = 250;
+  const rockCount = 125;
   const minRadius = 2.8;
   const maxRadius = 3.5;
   const groupRef = useRef<Group>(null!);
@@ -48,7 +48,11 @@ const Ring = () => {
     [texture]
   );
   return (
-    <group ref={groupRef} position={[0, 1, 0]} rotation={[degToRad(5), 0, 0]}>
+    <group
+      ref={groupRef}
+      position={[0, 0, 0]}
+      rotation={[degToRad(0), degToRad(-10), degToRad(10)]}
+    >
       {rocks.map((rock, index) => {
         const commonProps = {
           position: rock.position.toArray(),
