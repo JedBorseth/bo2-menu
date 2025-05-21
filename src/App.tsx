@@ -6,8 +6,6 @@ import { Suspense } from "react";
 
 function App() {
   const [hoveredItem, setHoveredItem] = useState<string>("");
-
-  // Map each list item to its hover text
   const hoverTexts: Record<string, string> = {
     SOLO: "Play solo against zombies.",
     "CUSTOM GAMES": "Create your own custom zombie games.",
@@ -19,8 +17,10 @@ function App() {
   return (
     <div className="flex flex-col items-start h-screen">
       <div className="flex p-10 w-full">
-        <div className="flex flex-col items-start h-screen w-1/2">
-          <h1 className="text-7xl">ZOMBIES</h1>
+        <div className="flex flex-col items-start h-screen w-1/2 pl-20">
+          <h1 className="text-7xl" onClick={() => {}}>
+            ZOMBIES
+          </h1>
           <ul className="text-3xl my-10 capitalize">
             {Object.keys(hoverTexts).map((item, i) => (
               <>
@@ -52,7 +52,7 @@ function App() {
               width={32}
               height={32}
             />
-            <p className="text-yellow-300 ml-2">Player 1</p>
+            <p className="text-yellow-300 ml-2">Jedders</p>
             <Volume1 className="absolute -left-8" />
           </div>
         </div>

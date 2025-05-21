@@ -13,7 +13,7 @@ const Globe = () => {
   });
   return (
     <group position={[-4, -1, 1]} rotation={[0.4, 0, 0]} scale={1.75}>
-      <mesh position={[0, 0, 0]} scale={2} ref={globeRef}>
+      <mesh position={[0, 0, 0]} scale={1.75} ref={globeRef}>
         <sphereGeometry args={[1, 32, 32]} />
         <meshStandardMaterial map={texture} />
       </mesh>
