@@ -1,22 +1,13 @@
-import { Fragment, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { ChevronRight, Volume1 } from "lucide-react";
 import Globe from "./components/Globe";
 import { Suspense } from "react";
 import { cn } from "./lib/utils";
 
-export const MenuItems = [
-  "SOLO",
-  "CUSTOM GAMES",
-  "THEATRE",
-  "LEADERBOARDS",
-  "OPTIONS",
-];
-
 function App() {
-  const [hoveredItem, setHoveredItem] =
-    useState<(typeof MenuItems)[number]>("");
-  const [route, setRoute] = useState<(typeof MenuItems)[number]>("");
+  const [hoveredItem, setHoveredItem] = useState<string>("");
+  const [route, setRoute] = useState<string>("");
   const hoverTexts: Record<string, string> = {
     SOLO: "Play solo against zombies.",
     "CUSTOM GAMES": "Create your own custom zombie games.",
@@ -139,6 +130,14 @@ function App() {
         className="absolute top-0 left-0 -z-20 w-screen h-screen object-center md:object-fill object-none"
         alt="Background"
       />
+
+      <audio
+        autoPlay
+        loop
+        controls
+        src="./assets/main-theme.mp3"
+        className="absolute top-0 -right-10 scale-50"
+      ></audio>
     </div>
   );
 }
