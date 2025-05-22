@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { ChevronRight, Volume1 } from "lucide-react";
 import Globe from "./components/Globe";
