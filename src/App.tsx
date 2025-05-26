@@ -35,7 +35,7 @@ function App() {
     }
   }, [route]);
   const hoverAudio = new Audio("/assets/audio/misc/cac_edit_class.mp3");
-  hoverAudio.volume = 0.1;
+  hoverAudio.volume = 0.01;
   hoverAudio.play().catch((error) => {
     console.error("Error playing audio:", error);
   });
