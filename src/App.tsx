@@ -4,9 +4,12 @@ import { ChevronRight, Volume1 } from "lucide-react";
 import Globe from "./components/Globe";
 import { Suspense } from "react";
 import { cn } from "./lib/utils";
+import AudioController from "./components/AudioController";
 
 function App() {
+  const [allowAudio, setAllowAudio] = useState<null | boolean>(null);
   const [hoveredItem, setHoveredItem] = useState<string>("");
+  const [tranzitAudioPlayed, setTranzitAudioPlayed] = useState<boolean>(false);
   const [route, setRoute] = useState<string>("");
   const hoverTexts: Record<string, string> = {
     SOLO: "Play solo against zombies.",
@@ -31,8 +34,33 @@ function App() {
         return [-4, -1, 1] as [number, number, number];
     }
   }, [route]);
+  const hoverAudio = new Audio("/assets/audio/misc/cac_edit_class.mp3");
+  hoverAudio.volume = 0.1;
+  hoverAudio.play().catch((error) => {
+    console.error("Error playing audio:", error);
+  });
+  // I will change this later as this audio triggers on any rerender
+  // // but I probably won't touch this code again
 
-  return (
+  return allowAudio === null ? (
+    <div className="grid place-items-center h-screen">
+      <div className="flex flex-wrap items-center text-center justify-center gap-4 p-10 bg-gray-800 text-white rounded-lg">
+        <h1 className="text-4xl w-full">Game Audio</h1>
+        <button
+          className="bg-orange-600 text-white px-4 py-2 rounded"
+          onClick={() => setAllowAudio(true)}
+        >
+          Yes, I want to hear the music!
+        </button>
+        <button
+          className="bg-gray-600 text-white px-4 py-2 rounded ml-4"
+          onClick={() => setAllowAudio(false)}
+        >
+          No, I prefer silence.
+        </button>
+      </div>
+    </div>
+  ) : (
     <div
       className={cn(
         `flex flex-col items-start h-screen ${
@@ -74,7 +102,7 @@ function App() {
             </span>
             <div className="bg-[#00000085] bg-opacity-5 w-2/3 px-1 pt-1 -mb-2 flex border-2 hover:border-orange-600 border-[#00000085] cursor-pointer relative">
               <img
-                src="/images/zombierank_5_ded.png"
+                src="/assets/images/zombierank_5_ded.png"
                 alt=""
                 width={32}
                 height={32}
@@ -86,12 +114,28 @@ function App() {
         </div>
       ) : (
         <div className="grid place-items-center h-screen w-screen relative">
-          <img src="./images/menu_zm_map_signpost_transit.png" alt="" />
+          <img
+            src="/assets/images/menu_zm_map_signpost_transit.png"
+            alt=""
+            onClick={() => {
+              const tranzitAudio = new Audio(
+                "/assets/audio/misc/lovesong_for_the_damned.mp3"
+              );
+              tranzitAudio.volume = 0.8;
+              if (!tranzitAudioPlayed)
+                tranzitAudio.play().catch((error) => {
+                  console.error("Error playing audio:", error);
+                });
+              setTranzitAudioPlayed(true);
+            }}
+          />
           <button
             className="absolute bottom-4 left-[20%] text-2xl flex gap-2"
-            onClick={() => setRoute("")}
+            onClick={() => {
+              setRoute("");
+            }}
           >
-            <img src="./images/xenonbutton_b.png" alt="" />
+            <img src="/assets/images/xenonbutton_b.png" alt="" />
             Back
           </button>
         </div>
@@ -111,33 +155,26 @@ function App() {
 
       {/* Background images */}
       <img
-        src="/images/lui_bkg_zm.jpg"
+        src="/assets/images/lui_bkg_zm.jpg"
         className="absolute top-0 left-0 -z-20 w-screen h-screen object-center md:object-fill object-none"
         alt="Background"
       />
       <img
-        src="/images/lui_bkg_zm_flare.png"
+        src="/assets/images/lui_bkg_zm_flare.png"
         className="absolute top-0 left-0 -z-20 w-screen h-screen object-center md:object-fill object-none"
         alt="Background"
       />
       <img
-        src="/images/lui_bkg_zm_flare_left.png"
+        src="/assets/images/lui_bkg_zm_flare_left.png"
         className="absolute top-0 left-0 -z-20 w-screen h-screen object-center md:object-fill object-none"
         alt="Background"
       />
       <img
-        src="/images/lui_bkg_zm_sun.png"
+        src="/assets/images/lui_bkg_zm_sun.png"
         className="absolute top-0 left-0 -z-20 w-screen h-screen object-center md:object-fill object-none"
         alt="Background"
       />
-
-      <audio
-        autoPlay
-        loop
-        controls
-        src="./assets/main-theme.mp3"
-        className="absolute top-0 -right-10 scale-50"
-      ></audio>
+      {allowAudio && <AudioController globePos={globePosition} />}
     </div>
   );
 }

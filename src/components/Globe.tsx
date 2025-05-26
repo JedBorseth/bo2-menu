@@ -10,7 +10,7 @@ type GlobeProps = {
 
 const Globe = ({ targetPosition }: GlobeProps) => {
   const globeRef = useRef<Group>(null!);
-  const texture = useLoader(TextureLoader, "/textures/globe_zm.jpg");
+  const texture = useLoader(TextureLoader, "/assets/textures/globe_zm.jpg");
 
   const [isRotating, setIsRotating] = useState(true);
 

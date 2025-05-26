@@ -41,7 +41,7 @@ const Ring = () => {
       };
     });
   }, [rockCount]);
-  const texture = useLoader(TextureLoader, "/textures/rock.jpeg");
+  const texture = useLoader(TextureLoader, "/assets/textures/rock.jpeg");
 
   const material = useMemo(
     () => <meshStandardMaterial map={texture} />,
